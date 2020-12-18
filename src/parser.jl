@@ -1,6 +1,6 @@
 module Parser
 
-export parse_domain, parse_problem, parse_pddl, @pddl, @pddl_str
+export parse_domain, parse_problem, parse_pddl, pddl, pddl_str
 export load_domain, load_problem
 
 using ParserCombinator, Julog
@@ -393,16 +393,16 @@ parse_pddl(sym::Symbol) = parse_formula(sym)
 parse_pddl(str::String) = parse_pddl(parse_one(str, top_level)[1])
 
 "Parse string(s) to PDDL construct."
-macro pddl(str::String)
+function pddl(str::String)
     return parse_pddl(str)
 end
 
-macro pddl(strs::String...)
+function pddl(strs::String...)
     return collect(parse_pddl.(strs))
 end
 
 "Parse string to PDDL construct."
-macro pddl_str(str::String)
+function pddl_str(str::String)
     return parse_pddl(str)
 end
 
