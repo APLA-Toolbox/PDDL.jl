@@ -9,6 +9,7 @@ export parse_domain, parse_problem, parse_pddl, pddl, pddl_str
 export write_domain, write_problem, write_pddl
 export load_domain, load_problem, preprocess
 export save_domain, save_problem
+export get_value
 export get_static_predicates, get_static_functions
 export satisfy, evaluate, find_matches
 export init_state, goal_state, initialize, transition, simulate

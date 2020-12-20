@@ -19,3 +19,7 @@ has_axiom(formula::Term, domain::Domain) = length(domain.axioms) > 0 &&
 "Check if formula contains a universal or existential quantifier."
 has_quantifier(formula::Term) =
     has_pred(formula, Set(Symbol[:forall, :exists]))
+
+"Get subscript from State"
+get_value(state::State, key::String) = state[key]
+
