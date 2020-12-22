@@ -23,3 +23,9 @@ has_quantifier(formula::Term) =
 "Get subscript from State"
 get_value(state::State, key::String) = state[key]
 
+"Check if term is in State"
+has_term_in_state(domain::Domain, state::State, term::Term) =
+    return state[domain, term]
+
+flatten_goal(problem::Problem) = 
+    return flatten_conjs(problem.goal)
