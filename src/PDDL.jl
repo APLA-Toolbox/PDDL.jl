@@ -21,6 +21,7 @@ export effect_diff, precond_diff, effect_dist, update!, update
 export available, relevant, execute, execpar, execseq, regress, trigger
 export use_available_action_cache!, use_relevant_action_cache!
 export clear_available_action_cache!, clear_relevant_action_cache!
+export relax_actions
 
 include("requirements.jl")
 include("structs.jl")

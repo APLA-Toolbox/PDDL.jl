@@ -89,6 +89,17 @@ function effect_diff(effect::Term, state::Union{State,Nothing}=nothing,
     return diff
 end
 
+"Relax actions"
+function relax_actions(actions::Dict{Symbol,Action})
+    for (_, act) in actions
+        diff = effect_diff(act.effect)
+        precond = precond_diff(act.precond)
+        actions[i].effect = diff.add
+        actions[i].precond = precond.add
+    end
+    return actions
+end
+
 "Convert precondition formula to a state difference."
 function precond_diff(precond::Term, state::Union{State,Nothing}=nothing)
     diff = Diff()
