@@ -91,11 +91,11 @@ end
 
 "Relax actions"
 function relax_actions(actions::Dict{Symbol,Action})
-    for (_, act) in actions
+    for (key, act) in actions
         diff = effect_diff(act.effect)
         precond = precond_diff(act.precond)
-        actions[i].effect = diff.add
-        actions[i].precond = precond.add
+        actions[key].effect = diff.add
+        actions[key].precond = precond.add
     end
     return actions
 end
