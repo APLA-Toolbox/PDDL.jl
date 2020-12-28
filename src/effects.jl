@@ -90,7 +90,9 @@ function effect_diff(effect::Term, state::Union{State,Nothing}=nothing,
 end
 
 "Relax actions"
-function relax_actions(actions::Dict{Symbol,Action})
+function compute_relaxed_actions(actions::Dict{Symbol,Action})
+    relaxed_effects = Dict{Symbol, Vector{Term}}()
+    relaxed_preconditions = Dict{Symbol, Vector{Term}}()
     for (key, act) in actions
         diff = effect_diff(act.effect)
         precond = precond_diff(act.precond)
