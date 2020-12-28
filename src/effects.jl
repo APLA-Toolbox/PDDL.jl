@@ -99,7 +99,7 @@ function compute_relaxed_actions(actions::Dict{Symbol,Action})
         actions[key].effect = diff.add
         actions[key].precond = precond.add
     end
-    return actions
+    return relaxed_effects, relaxed_preconditions
 end
 
 "Convert precondition formula to a state difference."
