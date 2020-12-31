@@ -46,3 +46,9 @@ function compute_hsp_axioms(domain::Domain)
     domain.axioms = Clause[]
     return domain, axioms
 end
+
+"Create state class"
+function create_state(types:::Set{Term}, facts::Set{Term})
+    state = State(types, facts, Dict{Symbol,Any}())
+    return state
+end
