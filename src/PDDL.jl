@@ -22,6 +22,7 @@ export available, relevant, execute, execpar, execseq, regress, trigger
 export use_available_action_cache!, use_relevant_action_cache!
 export clear_available_action_cache!, clear_relevant_action_cache!
 export compute_relaxed_actions
+export regularize_clauses, compute_hsp_axioms, filter_negative_preconds
 
 include("requirements.jl")
 include("structs.jl")

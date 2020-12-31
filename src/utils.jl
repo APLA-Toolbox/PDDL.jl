@@ -29,3 +29,19 @@ has_term_in_state(domain::Domain, state::State, term::Term) =
 
 flatten_goal(problem::Problem) = 
     return flatten_conjs(problem.goal)
+
+"Filter out negative preconditions"
+function filter_negative_preconds(action_def::Term) 
+    conds = get_preconditions(action_def; converter=to_dnf)
+    conds = [c.args for c in conds.args]
+    for c in conds filter!(t -> t.name != :not, c) end
+    return conds
+end
+
+"Compute axioms without negative literals"
+function compute_hsp_axioms(domain::Domain)
+    axioms = regularize_clauses(domain.axioms) # Regularize domain axioms
+    axioms = [Clause(ax.head, [t for t in ax.body if t.name != :not])
+              for ax in axioms] # Remove negative literals
+    return axioms
+end
