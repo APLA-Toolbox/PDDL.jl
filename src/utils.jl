@@ -43,5 +43,6 @@ function compute_hsp_axioms(domain::Domain)
     axioms = regularize_clauses(domain.axioms) # Regularize domain axioms
     axioms = [Clause(ax.head, [t for t in ax.body if t.name != :not])
               for ax in axioms] # Remove negative literals
-    return axioms
+    domain.axioms = Clause[]
+    return domain, axioms
 end
