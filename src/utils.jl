@@ -124,7 +124,7 @@ end
 
 "Get facts and state"
 function get_facts_and_state(facts_costs::Dict{Term,Float64}, types::Set{Term})
-    facts = Set(keys(fact_costs))
+    facts = Set(keys(facts_costs))
     state = State(types, facts, Dict{Symbol,Any}())
     return facts, state
 end
