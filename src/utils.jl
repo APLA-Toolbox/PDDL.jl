@@ -48,7 +48,7 @@ function compute_hsp_axioms(domain::Domain)
 end
 
 "Create state class"
-function create_state(types::Set{Term}, facts::Set{Term})
+function create_stat(terms::Vector{<:Term}, types::Vector{<:Term}=Term[])
     return State(types, facts, Dict{Symbol, Any}())
 end
 
@@ -115,4 +115,9 @@ end
 "Initialize facts costs"
 function convert_any_to_terms(set_any::Set{Any})
     return [parse(Term, s) for s in set_any]
+end
+
+"Initialize fact costs"
+function init_facts_costs(facts::Set{Term})
+    return Dict{Term,Float64}(f => 0 for f in facts)
 end
