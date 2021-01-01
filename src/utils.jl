@@ -53,7 +53,8 @@ function create_stat(terms::Vector{<:Term}, types::Vector{<:Term}=Term[])
 end
 
 "Compute costs of one-step derivation of domain axioms"
-function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Term,Float64}, ax::Clause, heur::String)
+function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Any,Any}, ax::Clause, heur::String)
+    facts_costs = convert_dict_any_to_term(facts_costs)
     _, subst = resolve(ax.body, [Clause(f, []) for f in facts])
     for s in subst
         body = [substitute(t, s) for t in ax.body]
@@ -70,7 +71,8 @@ function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Te
 end
 
 "Compute costs of all effects of available actions"
-function compute_cost_action_effect(fact_costs::Dict{Term,Float64}, act::Term, domain::Domain, preconds::Dict{Symbol, Vector{Vector{Term}}}, additions::Dict{Symbol, Vector{Term}}, heur::String)
+function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain::Domain, preconds::Dict{Symbol, Vector{Vector{Term}}}, additions::Dict{Symbol, Vector{Term}}, heur::String)
+    facts_costs = convert_dict_any_to_term(facts_costs)
     act_args = domain.actions[act.name].args
     subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
     # Look-up preconds and substitute vars
@@ -123,8 +125,14 @@ function init_facts_costs(facts::Set{Term})
 end
 
 "Get facts and state"
-function get_facts_and_state(facts_costs::Dict{Term,Float64}, types::Set{Term})
-    facts = Set(keys(facts_costs))
+function get_facts_and_state(facts_costs::Dict{Any,Any}, types::Set{Term})
+    real_facts_costs = convert_dict_any_to_term(facts_costs)
+    facts = Set(keys(real_facts_costs))
     state = State(types, facts, Dict{Symbol,Any}())
     return facts, state
+end
+
+"Convert any any to term float64 dicts"
+function convert_dict_any_to_term(dict::Dict{Any, Any})
+    return Dict{Term,Float64}(f => c for (f, c) in facts_costs)
 end
