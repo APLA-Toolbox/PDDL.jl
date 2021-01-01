@@ -113,6 +113,6 @@ function length_set(set::Set)
 end
 
 "Initialize facts costs"
-function initialize_facts_costs(facts::Set{Term})
-    return Dict{Term, Float64}(f => 0 for f in facts)
+function create_state(terms::Vector{<:Term}, types::Vector{<:Term}=Term[])
+    return State(terms, types)
 end
