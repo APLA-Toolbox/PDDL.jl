@@ -138,5 +138,5 @@ end
 
 "Convert any any to symbol vector(vector(term)) dicts"
 function convert_dict_any_to_preconds(dict::Dict{Any, Any})
-    return Dict{Symbol, Vector{Vector{Term}}}(f => c for (f, c) in dict)
+    return Dict{Symbol, Vector{Vector{Term}}}(Symbol(f) => c for (f, c) in dict)
 end
