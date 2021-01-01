@@ -75,7 +75,7 @@ function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain
     act_args = domain.actions[act.name].args
     subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
     # Look-up preconds and substitute vars
-    conds = preconds[act.name]
+    conds = preconds[string(act.name)]
     conds = [[substitute(t, subst) for t in c] for c in conds]
     # Compute cost of reaching each action
     if heur == "delete_relaxation/h_add"
@@ -84,7 +84,7 @@ function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain
         cost = minimum([[maximum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
     end
     # Compute cost of reaching each added fact
-    added = [substitute(a, subst) for a in additions[act.name]]
+    added = [substitute(a, subst) for a in additions[string(act.name)]]
     cost = cost + get_arbitrary_cost(act, domain) # returns 1 if arbitrary cost isn't found (only total-cost key is checked)
     for fact in added
         if cost < get(fact_costs, fact, Inf)
