@@ -84,7 +84,7 @@ function compute_cost_action_effect(fact_costs::Dict{Term,Float64}, act::Term, d
     end
     # Compute cost of reaching each added fact
     added = [substitute(a, subst) for a in additions[act.name]]
-    cost = cost + 1 # TODO: Handle arbitrary action costs
+    cost = cost + get_arbitrary_cost(act, domain) # returns 1 if arbitrary cost isn't found (only total-cost key is checked)
     for fact in added
         if cost < get(fact_costs, fact, Inf)
             fact_costs[fact] = cost end
