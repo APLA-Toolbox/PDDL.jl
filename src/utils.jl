@@ -57,7 +57,7 @@ function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Te
     _, subst = resolve(ax.body, [Clause(f, []) for f in facts])
     for s in subst
         body = [substitute(t, s) for t in ax.body]
-        if heur == "add"
+        if heur == "delete_relaxation/h_add"
             cost = sum([0; [get(fact_costs, f, 0) for f in body]])
         else
             cost = maximum([0; [get(fact_costs, f, 0) for f in body]])
@@ -77,7 +77,7 @@ function compute_cost_action_effect(fact_costs::Dict{Term,Float64}, act::Term, d
     conds = preconds[act.name]
     conds = [[substitute(t, subst) for t in c] for c in conds]
     # Compute cost of reaching each action
-    if heur == "add"
+    if heur == "delete_relaxation/h_add"
         cost = minimum([[sum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
     else
         cost = minimum([[maximum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
