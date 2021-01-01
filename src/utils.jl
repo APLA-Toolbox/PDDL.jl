@@ -32,7 +32,7 @@ flatten_goal(problem::Problem) =
 
 global g_preconditions = Dict{Symbol,Vector{Vector{Term}}}()
 
-function cache_global_preconditions(domain::Domain, g_preconditions::Dict{Symbol,Vector{Vector{Term}}})
+function cache_global_preconditions(domain::Domain)
     for (act_name, act_def) in domain.actions
         conds = filter_negative_preconds(act_def)
         g_preconditions[act_name] = conds
