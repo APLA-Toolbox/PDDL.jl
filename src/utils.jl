@@ -113,6 +113,6 @@ function length_set(set::Set)
 end
 
 "Initialize facts costs"
-function create_state(terms::Vector{<:Term}, types::Vector{<:Term}=Term[])
-    return State(terms, types)
+function convert_any_to_terms(set_any::Set{Any})
+    return [parse(Term, s) for s in set_any]
 end
