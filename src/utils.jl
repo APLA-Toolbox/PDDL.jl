@@ -63,7 +63,7 @@ end
 
 "Compute costs of one-step derivation of domain axioms"
 function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Any,Any}, ax::Clause, heur::String)
-    facts_costs = convert_dict_any_to_term(facts_costs)
+    facts_costs = convert_dict_any_to_term(fact_costs)
     _, subst = resolve(ax.body, [Clause(f, []) for f in facts])
     for s in subst
         body = [substitute(t, s) for t in ax.body]
