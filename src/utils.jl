@@ -30,7 +30,7 @@ has_term_in_state(domain::Domain, state::State, term::Term) =
 flatten_goal(problem::Problem) = 
     return flatten_conjs(problem.goal)
 
-g_preconditions::Dict{Symbol,Vector{Vector{Term}}}()
+global g_preconditions = Dict{Symbol,Vector{Vector{Term}}}()
 
 function cache_global_preconditions(domain::Domain, g_preconditions::Dict{Symbol,Vector{Vector{Term}}})
     for (act_name, act_def) in domain.actions
