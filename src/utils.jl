@@ -71,7 +71,7 @@ function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{An
 end
 
 "Compute costs of all effects of available actions"
-function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain::Domain, preconds::Dict{Symbol, Vector{Vector{Term}}}, additions::Dict{Symbol, Vector{Term}}, heur::String)
+function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain::Domain, preconds::Dict{Any, Any}, additions::Dict{Any, Any}, heur::String)
     facts_costs = convert_dict_any_to_term(facts_costs)
     act_args = domain.actions[act.name].args
     subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
