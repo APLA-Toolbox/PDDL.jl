@@ -52,3 +52,44 @@ function create_state(types:::Set{Term}, facts::Set{Term})
     state = State(types, facts, Dict{Symbol,Any}())
     return state
 end
+
+"Compute costs of one-step derivation of domain axioms"
+function compute_costs_one_step_derivation(facts::Set{Term}, fact_costs::Dict{Term,Float64}, ax::Clause, heur::String)
+    _, subst = resolve(ax.body, [Clause(f, []) for f in facts])
+    for s in subst
+        body = [substitute(t, s) for t in ax.body]
+        if heur == "add"
+            cost = sum([0; [get(fact_costs, f, 0) for f in body]])
+        else
+            cost = maximum([0; [get(fact_costs, f, 0) for f in body]])
+        end
+        derived = substitute(ax.head, s)
+        if cost < get(fact_costs, derived, Inf)
+            fact_costs[derived] = cost end
+    end
+    return fact_costs
+end
+
+"Compute costs of all effects of available actions"
+function compute_cost_action_effect(fact_costs::Dict{Term,Float64}, act::Term, domain::Domain, preconds::Dict{Symbol, Vector{Vector{Term}}}, additions::Dict{Symbol, Vector{Term}}, heur::String)
+    act_args = domain.actions[act.name].args
+    subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
+    # Look-up preconds and substitute vars
+    conds = preconds[act.name]
+    conds = [[substitute(t, subst) for t in c] for c in conds]
+    # Compute cost of reaching each action
+    if heur == "add"
+        cost = minimum([[sum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
+    else
+        cost = minimum([[maximum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
+    end
+    # Compute cost of reaching each added fact
+    added = [substitute(a, subst) for a in additions[act.name]]
+    cost = cost + 1 # TODO: Handle arbitrary action costs
+    for fact in added
+        if cost < get(fact_costs, fact, Inf)
+            fact_costs[fact] = cost end
+    end
+    return fact_costs
+end
+    
