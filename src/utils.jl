@@ -31,7 +31,7 @@ flatten_goal(problem::Problem) =
     return flatten_conjs(problem.goal)
 
 "Filter out negative preconditions"
-function filter_negative_preconds(action_def::Term) 
+function filter_negative_preconds(action_def::Action) 
     conds = get_preconditions(action_def; converter=to_dnf)
     conds = [c.args for c in conds.args]
     for c in conds filter!(t -> t.name != :not, c) end
