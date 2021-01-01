@@ -48,7 +48,7 @@ function compute_hsp_axioms(domain::Domain)
 end
 
 "Create state class"
-function create_state(types:::Set{Term}, facts::Set{Term})
+function create_state(types::Set{Term}, facts::Set{Term})
     state = State(types, facts, Dict{Symbol,Any}())
     return state
 end
