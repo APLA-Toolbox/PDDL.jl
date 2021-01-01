@@ -134,5 +134,5 @@ end
 
 "Convert any any to term float64 dicts"
 function convert_dict_any_to_term(dict::Dict{Any, Any})
-    return Dict{Term,Float64}(f => c for (f, c) in facts_costs)
+    return Dict{Term,Float64}(f => c for (f, c) in dict)
 end
