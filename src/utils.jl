@@ -84,7 +84,7 @@ function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain
     act_args = domain.actions[act.name].args
     subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
     # Look-up preconds and substitute vars
-    conds = g_preconditions[string(act.name)]
+    conds = g_preconditions[act.name]
     conds = [[substitute(t, subst) for t in c] for c in conds]
     # Compute cost of reaching each action
     if heur == "delete_relaxation/h_add"
