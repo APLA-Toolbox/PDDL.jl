@@ -49,8 +49,7 @@ end
 
 "Create state class"
 function create_state(types::Set{Term}, facts::Set{Term})
-    state = State(types, facts, Dict{Symbol,Any}())
-    return state
+    return State(types, facts)
 end
 
 "Compute costs of one-step derivation of domain axioms"
