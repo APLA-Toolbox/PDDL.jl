@@ -30,6 +30,15 @@ has_term_in_state(domain::Domain, state::State, term::Term) =
 flatten_goal(problem::Problem) = 
     return flatten_conjs(problem.goal)
 
+g_preconditions::Dict{Symbol,Vector{Vector{Term}}}()
+
+function cache_global_preconditions(domain::Domain, g_preconditions::Dict{Symbol,Vector{Vector{Term}}})
+    for (act_name, act_def) in domain.actions
+        conds = filter_negative_preconds(act_def)
+        g_preconditions[act_name] = conds
+    end
+end
+
 "Filter out negative preconditions"
 function filter_negative_preconds(action_def::Action) 
     conds = get_preconditions(action_def; converter=to_dnf)
@@ -76,7 +85,7 @@ function compute_cost_action_effect(fact_costs::Dict{Any,Any}, act::Term, domain
     subst = Subst(var => val for (var, val) in zip(act_args, act.args)) 
     # Look-up preconds and substitute vars
     conds = preconds[string(act.name)]
-    conds = [substitute(c, subst) for c in conds]
+    conds = [[substitute(t, subst) for t in c] for c in conds]
     # Compute cost of reaching each action
     if heur == "delete_relaxation/h_add"
         cost = minimum([[sum([0; [get(fact_costs, f, 0) for f in conj]]) for conj in conds]; Inf])
