@@ -49,7 +49,7 @@ end
 
 "Create state class"
 function create_state(types::Set{Term}, facts::Set{Term})
-    return State(types, facts)
+    return State(types, facts, Dict{Symbol, Any}())
 end
 
 "Compute costs of one-step derivation of domain axioms"
@@ -105,4 +105,9 @@ function get_arbitrary_cost(act::Term, domain::Domain)
         end
     end
     return 1
+end
+
+"Return len of Julia Set"
+function length_set(set::Set)
+    return length(set)
 end
