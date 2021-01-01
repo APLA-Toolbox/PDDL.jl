@@ -98,9 +98,9 @@ function get_arbitrary_cost(act::Term, domain::Domain)
     for e in effects.args
         if string(e.args[1]) == "total-cost"
             if string(e.name) == "increase"
-                return e.args[2] * 1
+                return parse(Float64, string(e.args[2])) * 1
             elseif string(e.name) == "decrease"
-                return e.args[2] * -1
+                return parse(Float64, string(e.args[2])) * -1
             end
         end
     end
