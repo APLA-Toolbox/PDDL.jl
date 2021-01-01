@@ -26,6 +26,7 @@ export regularize_clauses, compute_hsp_axioms, filter_negative_preconds
 export compute_costs_one_step_derivation, compute_costs_one_step_derivation
 export get_arbitrary_cost
 export length_set, init_facts_costs, get_facts_and_state, convert_dict_any_to_term
+export convert_dict_any_to_preconds
 
 include("requirements.jl")
 include("structs.jl")
