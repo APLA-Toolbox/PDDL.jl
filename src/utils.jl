@@ -101,5 +101,8 @@ function get_arbitrary_cost(act::Term, domain::Domain)
                 return e.args[2] * 1
             elseif string(e.name) == "decrease"
                 return e.args[2] * -1
+            end
+        end
+    end
     return 1
 end
