@@ -24,6 +24,7 @@ export clear_available_action_cache!, clear_relevant_action_cache!
 export compute_relaxed_actions
 export regularize_clauses, compute_hsp_axioms, filter_negative_preconds
 export compute_costs_one_step_derivation, compute_costs_one_step_derivation
+export get_arbitrary_cost
 
 include("requirements.jl")
 include("structs.jl")

@@ -92,3 +92,14 @@ function compute_cost_action_effect(fact_costs::Dict{Term,Float64}, act::Term, d
     return fact_costs
 end
     
+"Get arbitrary cost of action term"
+function get_arbitrary_cost(act::Term, domain::Domain)
+    effects = domain.actions[act.name].effect 
+    for e in effects.args
+        if string(e.args[1]) == "total-cost"
+            if string(e.name) == "increase"
+                return e.args[2] * 1
+            elseif string(e.name) == "decrease"
+                return e.args[2] * -1
+    return 1
+end
