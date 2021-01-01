@@ -113,6 +113,6 @@ function length_set(set::Set)
 end
 
 "Initialize facts costs"
-function initalize_facts_costs(facts::Set{Term})
+function initialize_facts_costs(facts::Set{Term})
     return Dict{Term, Float64}(f => 0 for f in facts)
 end
