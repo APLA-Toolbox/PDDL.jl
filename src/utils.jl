@@ -121,3 +121,10 @@ end
 function init_facts_costs(facts::Set{Term})
     return Dict{Term,Float64}(f => 0 for f in facts)
 end
+
+"Get facts and state"
+function get_facts_and_state(facts_costs::Dict{Term,Float64}, types::Set{Term})
+    facts = Set(keys(fact_costs))
+    state = State(types, facts, Dict{Symbol,Any}())
+    return facts, state
+end
