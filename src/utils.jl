@@ -106,6 +106,9 @@ end
 function get_arbitrary_cost(act::Term, domain::Domain)
     effects = domain.actions[act.name].effect 
     for e in effects.args
+        if length(e.args) > 0
+            continue
+        end
         if string(e.args[1]) == "total-cost"
             if string(e.name) == "increase"
                 return parse(Float64, string(e.args[2])) * 1
